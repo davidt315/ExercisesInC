@@ -1,7 +1,8 @@
 	.file	"hello.c"
+	.text
 	.section	.rodata
 .LC0:
-	.string	"x = %i\n"
+	.string	"c is %d\n"
 	.text
 	.globl	main
 	.type	main, @function
@@ -14,15 +15,17 @@ main:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	subq	$16, %rsp
-	movl	$5, -8(%rbp)
+	movl	$3, -12(%rbp)
+	movl	$4, -8(%rbp)
+	movl	-12(%rbp), %edx
 	movl	-8(%rbp), %eax
-	addl	$1, %eax
+	addl	%edx, %eax
 	movl	%eax, -4(%rbp)
-	movl	-8(%rbp), %eax
+	movl	-4(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC0, %edi
+	leaq	.LC0(%rip), %rdi
 	movl	$0, %eax
-	call	printf
+	call	printf@PLT
 	movl	$0, %eax
 	leave
 	.cfi_def_cfa 7, 8
@@ -30,5 +33,5 @@ main:
 	.cfi_endproc
 .LFE0:
 	.size	main, .-main
-	.ident	"GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.12) 5.4.0 20160609"
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
 	.section	.note.GNU-stack,"",@progbits

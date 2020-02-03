@@ -1,10 +1,11 @@
 #include <stdio.h>
 
 int main() {
-    int x = 5;
-    int y = x + 1;
-    printf("x = %i\n", x);
-    return 0;
+  int a = 3;
+  int b = 4;
+  int c = a + b;
+  printf("c is %d\n", c);
+  return 0;
 }
 
 /*
