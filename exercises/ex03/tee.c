@@ -72,6 +72,24 @@ int main(int argc, char *argv[]) {
         printf("Usage: %s |-a| filename data_to_write\n", argv[0]);
         return 1;
     }
-    
+
     return 0;
 }
+
+
+/*
+ * REFLECT
+ * I think my googleing and finding new methods like getopt worked well and I was able
+ * to use those to my advantage. I also think I was good about getting help from a NINJA
+ * when I needed it. I was slowed down a lot when I started trying to write to the files
+ * because I think my knowledge of how fgets works was lacking, especially when it is in
+ * a loop. I also think my understanding of how the linux tee command works was not where
+ * it needed to be in order to implement it properly at first. Next time I will spend more
+ * time understanding some of the basic methods I might need like fgets and playing with 
+ * the thing I need to implement before starting (tee in this case).
+ * 
+ * The professional solutions had many more advanced ways of throwing errors and also had
+ * implemented structs to organize data. They malloced memory for their buffer which I didn't
+ * do and opened all the files, then handled writing, then closed all of them together.
+ * I think my solution wasn't as good, but used many of the same functions like getopt and 
+ * had a similar logic line.
