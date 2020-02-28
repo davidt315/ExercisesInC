@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "trout.h": "c",
+        "minunit.h": "c",
+        "inet.h": "c",
+        "errno.h": "c",
+        "fcntl.h": "c",
+        "signal.h": "c",
+        "un.h": "c",
+        "stdarg.h": "c",
+        "in_systm.h": "c",
+        "in.h": "c",
+        "socket.h": "c",
+        "ip.h": "c",
+        "time.h": "c",
+        "types.h": "c",
+        "getopt.h": "c",
+        "random": "c"
+    },
+    "python.pythonPath": "/usr/bin/python3"
+}
