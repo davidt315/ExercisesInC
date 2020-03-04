@@ -5,6 +5,9 @@ License: MIT License https://opensource.org/licenses/MIT
 */
 
 #include <stdlib.h>
+#include <stddef.h>
+
+#include "rand.h"
 
 // generate a random float using the algorithm described
 // at http://allendowney.com/research/rand
@@ -78,7 +81,38 @@ float my_random_float2()
 // compute a random double using my algorithm
 double my_random_double()
 {
-    // TODO: fill this in
+	long x;
+	long mant;
+	long exp = 1022;
+	int mask = 1;
+
+    while(1) {
+		x = random();
+        x = (x << 32) | random();
+        // change range until reaching set bit
+		if (x == 0) {
+			exp -= 63;
+		} else {
+			break;
+		}
+	}
+
+	// half the time move to the next exponent range
+	while (x & mask) {
+        mask <<= 1;
+        exp--;
+	}
+	
+	union {
+		double d;
+		long i;
+	} b;
+    
+    // mant is the last 52 bits of x
+	mant = x >> 11;
+    b.i = (exp << 52) | mant; // set the float binary to i
+
+	return b.d;
 }
 
 // return a constant (this is a dummy function for time trials)
@@ -101,6 +135,7 @@ float dummy2()
 }
 
 // generate a random float using the standard algorithm
+// fastest random float generator
 float random_float()
 {
     int x;
@@ -114,7 +149,7 @@ float random_float()
 
 
 // generate a random double using the standard algorithm
-float random_double()
+double random_double()
 {
     int x;
     double f;
@@ -124,3 +159,11 @@ float random_double()
 
     return f;
 }
+
+
+
+//
+// FASTER ALGORITHM
+// The default random_float() is the fastest
+//
+// The default random_double() is the fastest

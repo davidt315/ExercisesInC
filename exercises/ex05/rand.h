@@ -16,6 +16,6 @@ float dummy2();
   
 float random_float();
   
-float random_double();
+double random_double();
 
 
