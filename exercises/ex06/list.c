@@ -65,7 +65,12 @@ int pop(Node **list) {
 * val: value to add
 */
 void push(Node **list, int val) {
-    // FILL THIS IN!
+    // gets the first node in the list
+    Node *first = *list;
+    // make a new node for the first value
+    Node *new = make_node(val, first);
+    // change the head of list to the new element
+    *list = new;
 }
 
 
@@ -79,7 +84,29 @@ void push(Node **list, int val) {
 * returns: number of nodes removed
 */
 int remove_by_value(Node **list, int val) {
-    // FILL THIS IN!
+    Node *current = *list;
+    Node *last = NULL;
+    // loop through the linked list
+    while (current != NULL) {
+        // found val
+        if (current->val == val) {
+            // case where the first element is removed
+            if (last == NULL) {
+                *list = current->next;
+            }
+            // any other case
+            else {
+                last->next = current->next;
+            }
+            // free the memory
+            free(current);
+            return 1;
+        }
+        // keep track of the last to update the links
+        last = current;
+        current = current->next;
+    }
+    // return 0 if val not found
     return 0;
 }
 
@@ -91,7 +118,21 @@ int remove_by_value(Node **list, int val) {
 * list: pointer to pointer to Node
 */
 void reverse(Node **list) {
-    // FILL THIS IN!
+    Node *current = *list;
+    Node *next = current->next;
+    Node *temp;
+    // make the head's next NULL (tail)
+    current->next = NULL;
+    // reverse the order
+    while (next != NULL) {
+        temp = next->next;
+        next->next = current;
+        current = next;
+        next = temp;
+    }
+    // set head to the tail
+    *list = current;
+    
 }
 
 
@@ -104,8 +145,8 @@ int main() {
     Node **list = &head;
     print_list(list);
 
-    int retval = pop(list);
-    print_list(list);
+    int retval = 0; // pop(list);
+    // print_list(list);
 
     push(list, retval+10);
     print_list(list);
