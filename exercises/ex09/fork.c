@@ -1,10 +1,3 @@
-/* Example code for Exercises in C.
-
-Copyright 2016 Allen B. Downey
-License: MIT License https://opensource.org/licenses/MIT
-
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,13 +5,13 @@ License: MIT License https://opensource.org/licenses/MIT
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <wait.h>
+#include <sys/wait.h>
 
 
 // errno is an external global variable that contains
 // error information
 extern int errno;
-
+char* global_string;
 
 // get_seconds returns the number of seconds since the
 // beginning of the day, with microsecond precision
@@ -30,21 +23,22 @@ double get_seconds() {
 }
 
 
-void child_code(int i)
-{
+void child_code(int i) {
     sleep(i);
-    printf("Hello from child %d.\n", i);
+    printf("Hello from child %d, Global String at %p.\n", i, global_string);
 }
 
 // main takes two parameters: argc is the number of command-line
 // arguments; argv is an array of strings containing the command
 // line arguments
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int status;
     pid_t pid;
     double start, stop;
     int i, num_children;
+
+	char* heap_string = malloc(sizeof(char*));
+	global_string = malloc(sizeof(char*));
 
     // the first command-line argument is the name of the executable.
     // if there is a second, it is the number of children to create.
@@ -78,7 +72,7 @@ int main(int argc, char *argv[])
     }
 
     /* parent continues */
-    printf("Hello from the parent.\n");
+    printf("Hello from the parent. Global String is %p.\nHeap String is %p\n", global_string, heap_string);
 
     for (i=0; i<num_children; i++) {
         pid = wait(&status);
@@ -96,6 +90,7 @@ int main(int argc, char *argv[])
     // compute the elapsed time
     stop = get_seconds();
     printf("Elapsed time = %f seconds.\n", stop - start);
+    free(heap_string);
 
     exit(0);
 }
