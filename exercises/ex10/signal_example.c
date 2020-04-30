@@ -49,6 +49,7 @@ void times_up(int sig) {
 }
 
 int main(void) {
+
     int a, b, answer;
     char txt[4];
 
